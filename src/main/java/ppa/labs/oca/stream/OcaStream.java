@@ -12,6 +12,11 @@ import ppa.labs.oca.stream.model.Movie;
 
 public class OcaStream {
 
+    /**
+     * V1
+     * @param decade
+     * @return
+     */
     public List<Integer> uniqueAgesListV1(final Decade decade) {
 
         Set<Integer> ageSet = new HashSet<>();
@@ -25,6 +30,11 @@ public class OcaStream {
         return uniqueAgesList;
     }
 
+    /**
+     * V2
+     * @param decade
+     * @return
+     */
     public List<Integer> uniqueAgesListV2(final Decade decade) {
 
         return decade.getMovies().stream()
@@ -35,7 +45,11 @@ public class OcaStream {
                 .collect(Collectors.toList());
     }
 
-    // collectToSet
+    /**
+     * collectToSet
+     * @param decade
+     * @return
+     */
     public Set<Actor> oneActorOfEachAgeV1(final Decade decade) {
 
         return decade.getMovies().stream()
@@ -45,7 +59,11 @@ public class OcaStream {
 
     }
 
-    // collectToMapThenSet
+    /**
+     * collectToMapThenSet
+     * @param decade
+     * @return
+     */
     public Set<Actor> oneActorOfEachAgeV2(final Decade decade) {
 
         Map<Integer, Actor> someActorsByAge = decade.getMovies().stream()
@@ -57,6 +75,12 @@ public class OcaStream {
         return new HashSet<>(someActorsByAge.values());
     }
 
+    /**
+     * util
+     * @param keyExtractor
+     * @param <T>
+     * @return
+     */
     public static <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
 
         Set<Object> seen = ConcurrentHashMap.newKeySet();
