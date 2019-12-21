@@ -14,14 +14,15 @@ public class OcaStream {
 
     /**
      * V1
+     *
      * @param decade
      * @return
      */
     public List<Integer> uniqueAgesListV1(final Decade decade) {
 
         Set<Integer> ageSet = new HashSet<>();
-        for(Movie movie : decade.getMovies()) {
-            for(Actor actor : movie.getActors()) {
+        for (Movie movie : decade.getMovies()) {
+            for (Actor actor : movie.getActors()) {
                 ageSet.add(actor.getAge());
             }
         }
@@ -32,6 +33,7 @@ public class OcaStream {
 
     /**
      * V2
+     *
      * @param decade
      * @return
      */
@@ -47,6 +49,7 @@ public class OcaStream {
 
     /**
      * collectToSet
+     *
      * @param decade
      * @return
      */
@@ -61,6 +64,7 @@ public class OcaStream {
 
     /**
      * collectToMapThenSet
+     *
      * @param decade
      * @return
      */
@@ -76,14 +80,29 @@ public class OcaStream {
     }
 
     /**
-     * util
-     * @param keyExtractor
+     * Retourne un Predicate de T qui :
+     *   applique une function de T, (obtient le résultat)
+     *   et qui retourne true uniquement s'il n'a pas déjà rencontré le résultat
+     *
+     * Closure :
+     * "A closure is a special kind of object that combines two things: a function,
+     * and the environment in which that function was created. The environment
+     * consists of any local variables that were in-scope at the time that the
+     * closure was created"
+     * @param keyExtractor : une function de T
      * @param <T>
-     * @return
+     * @return un Predicate de T
      */
     public static <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
 
-        Set<Object> seen = ConcurrentHashMap.newKeySet();
+        /* La méthode distinctByKey n'est appelée qu'une seule fois, à l'init du stream */
+        /*final*/ Set<Object> seen = ConcurrentHashMap.newKeySet();
+
+        /*
+        Le body de la lambda expression est appelé à chaque itération dans le filter()
+        autorisé parce-que seen est "effectively final"
+        "Set.add returns true if this set did not already contain the specified element"
+        */
         return t -> seen.add(keyExtractor.apply(t));
     }
 
