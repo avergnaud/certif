@@ -18,6 +18,7 @@ OcaStream.java :
      * and the environment in which that function was created. The environment
      * consists of any local variables that were in-scope at the time that the
      * closure was created"
+     *
      * @param keyExtractor : une function de T
      * @param <T>
      * @return un Predicate de T
